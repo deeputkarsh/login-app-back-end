@@ -1,19 +1,31 @@
 {
-  "name": "login-app-back-end",
+  "name": "login-app-api",
   "version": "1.0.0",
-  "description": "login app back end",
+  "description": "simple login api which has login logout and session functionality",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/deeputkarsh/login-app-back-end.git"
+    "start": "node server.js",
+    "start-dev": "nodemon server.js",
+    "dev": "DEBUG=app nodemon --exec babel-node server.js",
+    "build": "rm -rf build && ./node_modules/.bin/babel . --out-dir build --ignore node_modules && cp .env build && cp server.js build",
+    "debug": "DEBUG=app node build/server.js",
+    "serve": "node build/server.js"
   },
   "author": "Utkarsh Deep",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/deeputkarsh/login-app-back-end/issues"
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.9"
   },
-  "homepage": "https://github.com/deeputkarsh/login-app-back-end#readme"
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.3",
+    "nodemon": "^1.12.7"
+  }
 }
