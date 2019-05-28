@@ -1,4 +1,5 @@
 import { User } from '../models'
+import { createToken, redisClient } from '../config'
 
 export const UserController = {
   signup: async (req, res) => {
@@ -24,12 +25,10 @@ export const UserController = {
     return res.send({ isSuccess: true, data })
   },
   getUserData: async (req, res) => {
-    const { id } = req.body
-    const user = await User.findById(id)
+    const user = await User.findById(req.userId)
     return res.send({
       isSuccess: true,
       data: {
-        id: user._id,
         name: user.name,
         email: user.email,
         mobile: user.mobile
@@ -44,19 +43,15 @@ export const UserController = {
     } else if (!user.validPassword(password)) {
       throw new Error('Invalid Password')
     }
-    return res.send({
-      isSuccess: true,
-      data: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        mobile: user.mobile
-      }
-    })
+    const token = await createToken(user._id.toString())
+    return res.send({ isSuccess: true, token })
+  },
+  logout: async (req, res) => {
+    await redisClient.deleteToken(req.userId)
+    return res.send({ isSuccess: true, msg: 'Logged out SuccessFully' })
   },
   updateProfile: async (req, res) => {
-    const { id } = req.body
-    const queryResult = await User.findByIdAndUpdate(id, req.body)
-    return res.send({ isSuccess: true, data: { msg: 'Item Updated', queryResult } })
+    await User.findByIdAndUpdate(req.userId, req.body)
+    return res.send({ isSuccess: true, msg: 'Item Updated' })
   }
 }
