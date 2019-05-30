@@ -3,7 +3,7 @@ import debug from 'debug'
 
 const log = debug('app')
 
-const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST)
+const client = redis.createClient(process.env.REDIS_URL)
 
 client.on('connect', function () {
   log('Redis client connected')
