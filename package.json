@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev": "DEBUG=app nodemon --exec babel-node server.js",
     "dev-inspect": "DEBUG=app babel-node --inspect server.js",
-    "build": "rimraf build && babel . --out-dir build --ignore node_modules",
+    "build": "rimraf build && babel ./src --out-dir build/src && cp server.js ./build/",
     "debug": "DEBUG=app node server.js"
   },
   "author": "Utkarsh Deep",
