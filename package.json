@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev": "DEBUG=app nodemon --exec babel-node server.js",
     "dev-inspect": "DEBUG=app babel-node --inspect server.js",
-    "prod-build": "./node_modules/.bin/babel . --out-dir build --ignore node_modules",
+    "build": "./node_modules/.bin/babel . --out-dir build --ignore node_modules",
     "debug": "DEBUG=app node server.js"
   },
   "author": "Utkarsh Deep",
