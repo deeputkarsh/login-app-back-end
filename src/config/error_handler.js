@@ -1,9 +1,11 @@
 import debug from 'debug'
-import { httpStatus } from '../constants/httpstatuscodes'
+import { httpStatus } from '../constants'
 
-const log = debug('app')
+const log = debug('app:error')
 
 export const errorHandler = (err, req, res, next) => {
+  debug.enabled('app:error') || debug.enable('app:error')
+  log(req.originalUrl)
   log(err)
 
   if (err.name === 'AppError') return res.status(err.status || 500).json({ error: err.message })

@@ -1,5 +1,5 @@
 export * from './connect_mongo'
 export { default as redisClient } from './redis-client'
 export * from './environment'
-export * from './errorhandler'
+export * from './error_handler'
 export * from './authentication-helper'
