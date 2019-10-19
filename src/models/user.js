@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import bcrypt from 'bcrypt-nodejs'
+import { SCHEMA_NAMES } from '../constants'
 
 const schemaDef = new Schema({
   email: String,
@@ -27,4 +28,4 @@ schemaDef.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password)
 }
 
-export const User = mongoose.model('User', schemaDef)
+export const User = mongoose.model(SCHEMA_NAMES.USER, schemaDef)
