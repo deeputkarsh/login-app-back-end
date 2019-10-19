@@ -1,5 +1,4 @@
-
-export * from './connectmongo'
+export * from './connect_mongo'
 export { default as redisClient } from './redis-client'
 export * from './environment'
 export * from './errorhandler'
