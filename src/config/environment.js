@@ -23,9 +23,9 @@ const JWT_CONFIG = {
   SECERET: JWT_SECERET,
   TOKEN_VALIDITY,
   NO_AUTH_PATHS: [
-    '/health-check',
-    '/version'
-    /* new RegExp(`^${STRING_VARIABLE}/otp/.*`), */
+    new RegExp('^/api/.*'),
+    '/user/signup',
+    '/user/login'
   ]
 }
 const ENCRYPTION = { ENCRYPT_ALGO, ENCRYPT_KEY }
