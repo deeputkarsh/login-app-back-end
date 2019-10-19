@@ -1,6 +1,7 @@
 import UserRouter from './user'
 import VersionHealthRouter from './version_health'
 import { httpStatus } from '../constants'
+import { AppError } from '../utils'
 
 const RouteData = [
   { path: '/user', router: UserRouter },
@@ -14,6 +15,6 @@ export const Routes = (app) => {
 
   // If not found 404 route
   app.use(function (req, res, next) {
-    return res.status(httpStatus.NOT_FOUND).json({ statusCode: httpStatus.NOT_FOUND, message: 'No route found' })
+    throw new AppError('No route found', httpStatus.NOT_FOUND)
   })
 }
