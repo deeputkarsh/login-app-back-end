@@ -1,63 +1,15 @@
 import jsonwebtoken from 'jsonwebtoken'
-import redisClient from './redis-client'
+// import { redisClient } from './redis-client'
+import { JWT_CONFIG } from './environment'
 
-const JWT_CONFIG = {
-  secret: process.env.JWT_SECERET,
-  authenticationNotRequiredAPIs: [
-    '/signup',
-    '/login'
-  ],
-  getAuthenticationNotRequiredAPIs: (path) => {
-    const result = JWT_CONFIG.authenticationNotRequiredAPIs.filter(elem => (path.search(elem) > -1))
-    return !!result.length
-  }
-}
-
-export const verifyToken = async (req, res, next) => {
-  const token = req.headers['x-access-token'] || req.headers.authorization // Express headers are auto converted to lowercase
-
-  if (!req.user && JWT_CONFIG.getAuthenticationNotRequiredAPIs(req.path)) {
-    next()
-  } else {
-    const tokenResp = await tokenHandling(token)
-    if (tokenResp.isSuccess === false) {
-      return res.json(tokenResp)
-    } else {
-      req.userId = tokenResp.user
-      const redisToken = await redisClient.get(req.userId)
-      if (redisToken) {
-        next()
-      } else {
-        return res.status(401).json({ isSuccess: false, message: 'token expired' })
-      }
-    }
-  }
-}
-
-export const createToken = async (userId) => {
-  const token = jsonwebtoken.sign({ user: userId }, process.env.JWT_SECERET, { expiresIn: 86400 })
-  await redisClient.set(userId, token)
+export const createToken = async (id) => {
+  const token = jsonwebtoken.sign({ id }, JWT_CONFIG.SECERET, { expiresIn: JWT_CONFIG.TOKEN_VALIDITY })
+  // await redisClient.set(id, token)
   return token
 }
-const tokenHandling = async (token) => {
-  if (token) {
-    if (token.startsWith('Bearer ')) {
-      // Remove Bearer from string
-      token = token.slice(7, token.length)
-    }
-    try {
-      const decoded = await jsonwebtoken.verify(token, JWT_CONFIG.secret)
-      return decoded
-    } catch (error) {
-      return {
-        isSuccess: false,
-        message: 'Token is not valid'
-      }
-    }
-  } else {
-    return {
-      isSuccess: false,
-      message: 'Auth token is not supplied'
-    }
-  }
+
+export const getLoginfromHeader = ({ authorization = '' }) => {
+  const authData = authorization.replace('Basic ', '')
+  const [mobile, password] = Buffer.from(authData, 'base64').toString().split(':')
+  return { mobile, password }
 }
