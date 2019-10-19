@@ -24,7 +24,7 @@ export const verifyToken = async (req, res, next) => {
       return res.json(tokenResp)
     } else {
       req.userId = tokenResp.user
-      const redisToken = await redisClient.getToken(req.userId)
+      const redisToken = await redisClient.get(req.userId)
       if (redisToken) {
         next()
       } else {
@@ -36,7 +36,7 @@ export const verifyToken = async (req, res, next) => {
 
 export const createToken = async (userId) => {
   const token = jsonwebtoken.sign({ user: userId }, process.env.JWT_SECERET, { expiresIn: 86400 })
-  await redisClient.saveToken(userId, token)
+  await redisClient.set(userId, token)
   return token
 }
 const tokenHandling = async (token) => {

@@ -47,7 +47,7 @@ export const UserController = {
     return res.send({ isSuccess: true, token })
   },
   logout: async (req, res) => {
-    await redisClient.deleteToken(req.userId)
+    await redisClient.remove(req.userId)
     return res.send({ isSuccess: true, msg: 'Logged out SuccessFully' })
   },
   updateProfile: async (req, res) => {
