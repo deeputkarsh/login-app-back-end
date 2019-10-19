@@ -4,7 +4,7 @@ import { createToken, redisClient } from '../config'
 export const UserController = {
   signup: async (req, res) => {
     const userInfo = req.body
-    let newUser = new User({
+    const newUser = new User({
       name: userInfo.name,
       email: userInfo.email,
       mobile: userInfo.mobile

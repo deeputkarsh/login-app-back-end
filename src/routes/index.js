@@ -1,7 +1,7 @@
 import UserRouter from './user'
 import { httpStatus } from '../constants'
 
-const RouteData = [ { path: '/', router: UserRouter } ]
+const RouteData = [{ path: '/', router: UserRouter }]
 
 export const Routes = (app) => {
   // Setting application routes
