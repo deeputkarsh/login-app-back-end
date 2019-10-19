@@ -8,13 +8,13 @@ const JWT_CONFIG = {
     '/login'
   ],
   getAuthenticationNotRequiredAPIs: (path) => {
-    let result = JWT_CONFIG.authenticationNotRequiredAPIs.filter(elem => (path.search(elem) > -1))
+    const result = JWT_CONFIG.authenticationNotRequiredAPIs.filter(elem => (path.search(elem) > -1))
     return !!result.length
   }
 }
 
 export const verifyToken = async (req, res, next) => {
-  let token = req.headers['x-access-token'] || req.headers['authorization'] // Express headers are auto converted to lowercase
+  const token = req.headers['x-access-token'] || req.headers.authorization // Express headers are auto converted to lowercase
 
   if (!req.user && JWT_CONFIG.getAuthenticationNotRequiredAPIs(req.path)) {
     next()
