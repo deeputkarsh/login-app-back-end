@@ -1,11 +1,15 @@
 import jsonwebtoken from 'jsonwebtoken'
-// import { redisClient } from './redis-client'
 import { JWT_CONFIG } from './environment'
+import { redisClient } from './redis-client'
 
-export const createToken = async (id) => {
-  const token = jsonwebtoken.sign({ id }, JWT_CONFIG.SECERET, { expiresIn: JWT_CONFIG.TOKEN_VALIDITY })
-  // await redisClient.set(id, token)
-  return token
+export const createToken = (id) => {
+  return jsonwebtoken.sign({ id }, JWT_CONFIG.SECERET, { expiresIn: JWT_CONFIG.TOKEN_VALIDITY })
+}
+
+export const isJWTRevoked = async (req, payload, done) => {
+  const token = req.headers.authorization.replace('Bearer ', '')
+  const isRevoked = await redisClient.get(token).catch(_ => done(null, false))
+  done(null, !!isRevoked)
 }
 
 export const getLoginfromHeader = ({ authorization = '' }) => {

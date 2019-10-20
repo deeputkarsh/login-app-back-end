@@ -28,11 +28,13 @@ export const UserController = {
     return res.json({ message: 'Logged in SuccessFully' })
   },
   logout: async (req, res) => {
-    await redisClient.remove(req.user.id)
-    return res.send({ isSuccess: true, msg: 'Logged out SuccessFully' })
+    const token = req.headers.authorization.replace('Bearer ', '')
+    const timeToExpire = req.user.exp * 1000 - Date.now()
+    await redisClient.set(token, 'revoked', timeToExpire)
+    return res.json({ message: 'Logged out SuccessFully' })
   },
   updateProfile: async (req, res) => {
     await User.findByIdAndUpdate(req.user.id, req.body)
-    return res.send({ isSuccess: true, msg: 'Item Updated' })
+    return res.json({ message: 'Profile Updated' })
   }
 }

@@ -14,8 +14,8 @@ client.on('error', function (err) {
 })
 
 export const redisClient = {
-  set: (key, value) => new Promise((resolve, reject) => {
-    client.set(key, value, (error, result) => {
+  set: (key, value, expiry) => new Promise((resolve, reject) => {
+    client.set(key, value, 'PX', expiry, (error, result) => {
       if (error) {
         return reject(error)
       }
@@ -24,14 +24,6 @@ export const redisClient = {
   }),
   get: (key) => new Promise((resolve, reject) => {
     client.get(key, function (error, result) {
-      if (error) {
-        return reject(error)
-      }
-      resolve(result)
-    })
-  }),
-  remove: (key) => new Promise((resolve, reject) => {
-    client.del(key, (error, result) => {
       if (error) {
         return reject(error)
       }
