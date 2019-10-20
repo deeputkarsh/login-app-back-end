@@ -2,7 +2,7 @@ import redis from 'redis'
 import debug from 'debug'
 import { REDIS_URL } from './environment'
 
-const log = debug('app')
+const log = debug('app:redis')
 
 const client = redis.createClient(REDIS_URL)
 
@@ -19,6 +19,7 @@ export const redisClient = {
       if (error) {
         return reject(error)
       }
+      log(result)
       resolve(result)
     })
   }),
@@ -27,6 +28,7 @@ export const redisClient = {
       if (error) {
         return reject(error)
       }
+      log(result)
       resolve(result)
     })
   })
