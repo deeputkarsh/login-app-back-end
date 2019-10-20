@@ -1,6 +1,5 @@
 import jsonwebtoken from 'jsonwebtoken'
-import { JWT_CONFIG } from './environment'
-import { redisClient } from './redis-client'
+import { JWT_CONFIG, redisClient } from './'
 
 export const createToken = (id) => {
   return jsonwebtoken.sign({ id }, JWT_CONFIG.SECERET, { expiresIn: JWT_CONFIG.TOKEN_VALIDITY })

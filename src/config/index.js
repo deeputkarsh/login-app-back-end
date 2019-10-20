@@ -1,5 +1,5 @@
 export * from './connect_mongo'
-export * from './redis-client'
+export * from './redis_client'
 export * from './environment'
 export * from './error_handler'
-export * from './authentication-helper'
+export * from './authentication_helper'
