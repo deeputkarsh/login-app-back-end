@@ -24,8 +24,7 @@ export const UserController = {
       throw new AppError('Invalid Password', httpStatus.UNAUTHORIZED)
     }
     const token = await createToken(user._id.toString())
-    res.setHeader('x-access-token', token)
-    return res.json({ message: 'Logged in SuccessFully' })
+    return res.json({ message: 'Logged in SuccessFully', token })
   },
   logout: async (req, res) => {
     const token = req.headers.authorization.replace('Bearer ', '')
