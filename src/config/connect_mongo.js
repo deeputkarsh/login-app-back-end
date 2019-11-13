@@ -7,26 +7,15 @@ const log = debug('app:mongo')
 
 mongoose.Promise = Promise
 
-mongoose.connection.on('connected', () => {
-  log('Connection Established')
-})
+mongoose.connection.on('connected', _ => log('Connection Established'))
 
-mongoose.connection.on('reconnected', () => {
-  log('Connection Reestablished')
-})
+mongoose.connection.on('reconnected', _ => log('Connection Reestablished'))
 
-mongoose.connection.on('disconnected', () => {
-  log('Connection Disconnected')
-})
+mongoose.connection.on('disconnected', _ => log('Connection Disconnected'))
 
-mongoose.connection.on('close', () => {
-  log('Connection Closed')
-})
+mongoose.connection.on('close', _ => log('Connection Closed'))
 
-mongoose.connection.on('error', (error) => {
-  log('ERROR: ' + error)
-  process.exit(1)
-})
+mongoose.connection.on('error', (error) => { log('ERROR: ' + error); process.exit(1) })
 
 mongoose.set('debug', MONGO_CONFIG.DEBUG)
 

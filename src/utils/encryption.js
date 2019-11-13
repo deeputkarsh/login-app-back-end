@@ -50,7 +50,7 @@ const Cypher = {
 }
 export const decryptMiddleware = (req, res, next) => {
   log('request URL', req.originalUrl)
-  if (req.body && req.body.payload && !req.originalUrl.includes('/assessor/')) {
+  if (req.body && req.body.payload) {
     req.body = Cypher.decrypt(req.body)
   }
   log('request body', req.body)

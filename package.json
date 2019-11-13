@@ -10,7 +10,7 @@
     "dev": "DEBUG=app:* nodemon --exec babel-node index.js",
     "dev-inspect": "DEBUG=app:* babel-node --inspect index.js",
     "lint": "eslint 'index.js' 'src/**/*.js' 'src/index.js'",
-    "lint-fix":"eslint 'index.js' 'src/**/*.js' 'src/index.js' --fix"
+    "lint-fix": "eslint 'index.js' 'src/**/*.js' 'src/index.js' --fix"
   },
   "author": "Utkarsh Deep",
   "license": "ISC",
@@ -24,7 +24,7 @@
       "pre-push": "npm run lint"
     }
   },
-  "eslintConfig":{
+  "eslintConfig": {
     "extends": "standard",
     "env": {
       "node": true,
